@@ -14,7 +14,7 @@ int main(void)
     if (pkt.tag == 0)
         printf(" tag: %d\n size: %d\n data: %s\n", pkt.tag, pkt.size, pkt.data);
 
-    free(tlv.data);
+    free(pkt.data);
 
     return 0;
 }

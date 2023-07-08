@@ -25,6 +25,22 @@ int tlv_connect(char *host, int port)
     return sockfd;
 }
 
+void send_tlv(int sockfd, tlv_pkt_t tlv_packet)
+{
+    char tlv_tag[2];
+    PACK_SHORT(tlv_packet.tag, tlv_tag);
+
+    send(sockfd, tlv_tag, 2, 0);
+
+    char tlv_size[4];
+    PACK_INT(tlv_packet.size, tlv_size);
+
+    send(sockfd, tlv_size, 4, 0);
+
+    if (tlv_packet.size > 0)
+        send(sockfd, tlv_packet.data, tlv_packet.size, 0);
+}
+
 tlv_pkt_t read_tlv(int sockfd)
 {
     tlv_pkt_t tlv;
